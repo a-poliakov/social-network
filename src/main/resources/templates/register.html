@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>НаКарантине - Заболеть</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>Оформить больничный:</h1>
+
+                <div th:if="${errorMessage != null}"
+                     th:utext="${errorMessage}" class="error">...</div>
+
+                <form class="form-horizontal" th:object="${appUser}" th:action="@{/register}" method="post">
+                    <div class="form-group">
+                        <span class="col-sm-10 col-sm-offset-2" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">..</span>
+                        <label for="name" class="control-label col-sm-2">Имя:</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Иван" id="name" class="form-control" th:field="*{firstName}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-10 col-sm-offset-2" th:if="${#fields.hasErrors('secondName')}" th:errors="*{secondName}">..</span>
+                        <label for="surname" class="control-label col-sm-2">Фамилия:</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Иванов" id="surname" class="form-control" th:field="*{secondName}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-10 col-sm-offset-2" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">..</span>
+                        <label for="email" class="control-label col-sm-2">Логин (E-mail):</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="example@mail.ru" id="email" class="form-control" th:field="*{login}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber" class="control-label col-sm-2">Номер телефона:</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="+7 (9xx) xxx-xx-xx" id="phoneNumber" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-10 col-sm-offset-2" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">..</span>
+                        <label for="password" class="control-label col-sm-2">Password:</label>
+                        <div class="col-sm-10">
+                            <input type="password"
+                                   id="password" th:field="*{password}"
+                                   name="password"
+                                   class="form-control"
+                                   placeholder="qwerty">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-10 col-sm-offset-2" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">..</span>
+                        <label for="repeatPassword" class="control-label col-sm-2">Повторите пароль:</label>
+                        <div class="col-sm-10">
+                            <input type="password"
+                                   id="repeatPassword" th:field="*{confirmPassword}"
+                                   name="repeatPassword"
+                                   class="form-control"
+                                   placeholder="qwerty">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-10 col-sm-offset-2" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">..</span>
+                        <label for="gender" class="control-label col-sm-2">Пол:</label>
+                        <div class="col-sm-10">
+                            <select id="gender" th:field="*{gender}" class="form-control form-control-lg">
+                                <option th:each="g : ${T(ru.apolyakov.social_network.model.Gender).values()}"
+                                        th:value="${g}" th:text="${g}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="city" class="control-label col-sm-2">Город:</label>
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   id="city" th:field="*{city}"
+                                   name="city"
+                                   class="form-control"
+                                   placeholder="Saint-Petersburg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="interests" class="control-label col-sm-2">Интересы:</label>
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   id="interests" th:field="*{interests}"
+                                   name="interests"
+                                   class="form-control"
+                                   placeholder="coffee and cookies">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-success" type="submit">Заболеть и самоизолироваться!</button>
+                        </div>
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <a type="submit"
+                               id="register"
+                               class="btn btn-primary btn-block"
+                               href="/" th:href="@{/}">Передумать</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

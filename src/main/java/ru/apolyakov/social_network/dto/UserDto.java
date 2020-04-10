@@ -1,9 +1,10 @@
-package ru.apolyakov.social_network.model;
+package ru.apolyakov.social_network.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.apolyakov.social_network.model.Gender;
 
 import java.io.Serializable;
 
@@ -11,11 +12,11 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+public class UserDto implements Serializable {
+    private  boolean isFriend;
 
     private int id;
     private String login;
-    private String password;
 
     private String firstName;
     private String secondName;
@@ -24,6 +25,4 @@ public class User implements Serializable {
     private Gender gender;
     private String interests;
     private String city;
-
-
 }

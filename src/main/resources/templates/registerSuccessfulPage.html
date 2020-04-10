@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/fragments/layout}">
+
+<head>
+    <title>НаКарантине - Профиль</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="container">
+        <h2>You have successfully registered!</h2>
+
+        <div th:if="${flashUser != null}">
+            <ul>
+                <li>User Name: <span th:utext="${flashUser.firstName}">..</span></li>
+                <li>Email: <span th:utext="${flashUser.login}">..</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
