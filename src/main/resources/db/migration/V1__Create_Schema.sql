@@ -1,6 +1,6 @@
 # create schema if not exists social_network;
 
-create table if not exists social_network.users
+create table if not exists users
 (
     id          BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
     login       VARCHAR(100) NOT NULL UNIQUE,
@@ -13,11 +13,11 @@ create table if not exists social_network.users
     city        VARCHAR(100)
 );
 
-create table if not exists social_network.user_subscription
+create table if not exists user_subscription
 (
     user_id   BIGINT NOT NULL,
     friend_id BIGINT NOT NULL,
     PRIMARY KEY (user_id, friend_id),
-    FOREIGN KEY (user_id) REFERENCES social_network.users (id),
-    FOREIGN KEY (friend_id) REFERENCES social_network.users (id)
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (friend_id) REFERENCES users (id)
 );

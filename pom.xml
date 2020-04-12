@@ -9,14 +9,15 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.apolyakov</groupId>
-	<artifactId>social-network</artifactId>
+	<artifactId>apolyakov-social-network</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>social-network</name>
+	<name>Social Network </name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 
 	<dependencies>
@@ -152,6 +153,28 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.6</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+					<repository>registry.heroku.com/${project.artifactId}/web</repository>
+					<tag>latest</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

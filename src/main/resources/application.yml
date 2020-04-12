@@ -1,12 +1,12 @@
 server:
-  port: 8083
+  port: ${PORT:8083}
 
 ## MySQL
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/social_network
-    username: root
-    password: example
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME:root}
+    password: ${JDBC_DATABASE_PASSWORD:example}
     initialization-mode: always
   flyway:
     enabled: true
