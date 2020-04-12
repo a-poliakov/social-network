@@ -1,7 +1,7 @@
 # Социальная сеть "НаКарантине"
 
-<img src="img/profile.png" alt = "Профиль пользователя"/>
-<img src="img/users_list.png" alt = "Список пользователе"/>
+<img src="img/profile.png" alt = "Профиль пользователя" width="320px" height="240px"/>
+<img src="img/users_list.png" alt = "Список пользователе" width="320px" height="240px"/>
 
 ## ТЗ (часть 1):
 **Заготовка для социальной сети**
