@@ -17,10 +17,11 @@ import ru.apolyakov.social_network.dto.UserConverter;
 import ru.apolyakov.social_network.dto.UserDto;
 import ru.apolyakov.social_network.model.User;
 
-import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @Transactional
@@ -63,7 +64,46 @@ public class UserServiceImpl  implements UserService, UserDetailsService {
         Optional<User> currentUser = userDao.findById(getCurrentUserId());
         if(currentUser.isPresent()) {
             List<User> friends = userDao.findFriends((long) currentUser.get().getId());
-            return UserConverter.convertToProfile(currentUser.get(), UserConverter.convertToUserDto(friends));
+            return UserConverter.convertToProfile(currentUser.get(), UserConverter.convertToUserDto(friends).stream().peek(dto -> dto.setFriend(Boolean.TRUE)).collect(Collectors.toList()));
+        }
+        throw new UsernameNotFoundException("User hasn't logged in!");
+    }
+
+    @Override
+    public List<UserDto> loadUsersList() throws AuthenticationException {
+        Optional<User> currentUser = userDao.findById(getCurrentUserId());
+        if(currentUser.isPresent()) {
+            Set<Integer> friendsIds = userDao.findFriends((long) currentUser.get().getId())
+                    .stream()
+                    .map(User::getId)
+                    .collect(Collectors.toSet());
+            return UserConverter.convertToUserDto(userDao.findAll())
+                    .stream()
+                    .filter(user -> currentUser.get().getId() != user.getId())
+                    .peek(user -> user.setFriend(friendsIds.contains(user.getId())))
+                    .collect(Collectors.toList());
+        }
+        throw new UsernameNotFoundException("User hasn't logged in!");
+    }
+
+    public void addFriend(int friendId) {
+        Optional<User> currentUser = userDao.findById(getCurrentUserId());
+        if(currentUser.isPresent()) {
+            Set<Integer> friendsIds = userDao.findFriends((long) currentUser.get().getId())
+                    .stream()
+                    .map(User::getId)
+                    .collect(Collectors.toSet());
+            if (!friendsIds.contains(friendId)) {
+                userDao.addFriendRelation(currentUser.get().getId(), friendId);
+            }
+            friendsIds = userDao.findFriends((long) friendId)
+                    .stream()
+                    .map(User::getId)
+                    .collect(Collectors.toSet());
+            if (!friendsIds.contains(currentUser.get().getId())) {
+                userDao.addFriendRelation(friendId, currentUser.get().getId());
+            }
+            return;
         }
         throw new UsernameNotFoundException("User hasn't logged in!");
     }

@@ -84,6 +84,11 @@ public class JdbcUserDao {
                                         .build());
     }
 
+    public void addFriendRelation(int firstId, int secondId) {
+        template.update(
+                "insert into user_subscription (user_id, friend_id) values(?,?)", firstId, secondId);
+    }
+
     public int update(User user) {
         return namedParameterJdbcTemplate.update(
                 "update users " +
@@ -99,7 +104,7 @@ public class JdbcUserDao {
 
     public int save(User user) {
         return template.update(
-                "insert into social_network.users (login, password, first_name, second_name, sex, age, interests, city) " +
+                "insert into users (login, password, first_name, second_name, sex, age, interests, city) " +
                         "values(?,?,?,?,?,?,?,?)",
                 user.getLogin(), user.getPassword(), user.getFirstName(), user.getSecondName(), user.getGender().name(),
                 user.getAge(), user.getInterests(), user.getCity());

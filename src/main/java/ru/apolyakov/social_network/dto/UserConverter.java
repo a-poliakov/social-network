@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class UserConverter {
     public static ProfileDto convertToProfile(User user, List<UserDto> friends) {
         return ProfileDto.builder()
+                .id(user.getId())
                 .login(user.getLogin())
                 .firstName(user.getFirstName())
                 .secondName(user.getSecondName())
@@ -28,6 +29,7 @@ public class UserConverter {
 
     public static UserDto convertToUserDto(User user) {
         return UserDto.builder()
+                .id(user.getId())
                 .login(user.getLogin())
                 .firstName(user.getFirstName())
                 .secondName(user.getSecondName())

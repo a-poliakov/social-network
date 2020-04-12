@@ -8,14 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.apolyakov.social_network.dto.ProfileDto;
 import ru.apolyakov.social_network.dto.ProfileValidator;
+import ru.apolyakov.social_network.dto.UserDto;
 import ru.apolyakov.social_network.service.UserServiceImpl;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -38,6 +38,19 @@ public class UserController {
             dataBinder.setValidator(appUserValidator);
         }
         // ...
+    }
+
+    @GetMapping("/users")
+    public String users(Model model) {
+        List<UserDto> userDtos = userService.loadUsersList();
+        model.addAttribute("users", userDtos);
+        return "/users";
+    }
+
+    @PostMapping("/friend")
+    public String addFrined(@RequestParam(name = "id") Integer friendId) {
+        userService.addFriend(friendId);
+        return "redirect:/users";
     }
 
 

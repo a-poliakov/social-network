@@ -1,9 +1,6 @@
 package ru.apolyakov.social_network.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.apolyakov.social_network.model.Gender;
 
 import java.io.Serializable;
@@ -12,8 +9,9 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class UserDto implements Serializable {
-    private  boolean isFriend;
+    private boolean isFriend;
 
     private int id;
     private String login;
