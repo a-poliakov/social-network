@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ru.apolyakov.social_network.service.UserService;
 import ru.apolyakov.social_network.service.UserServiceImpl;
 
 @Configuration
@@ -19,7 +20,7 @@ import ru.apolyakov.social_network.service.UserServiceImpl;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private AccessDeniedHandler accessDeniedHandler;
@@ -41,7 +42,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("login")
+                    .loginPage("/login")
 //                    .usernameParameter("email")
 //                    .passwordParameter("password")
                     .permitAll()

@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceImpl  implements UserService, UserDetailsService {
+public class UserServiceImpl  implements UserService {
     private final JdbcUserDao userDao;
     private final PasswordEncoder passwordEncoder;
 

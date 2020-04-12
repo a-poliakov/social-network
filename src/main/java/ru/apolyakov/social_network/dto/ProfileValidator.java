@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import ru.apolyakov.social_network.service.UserService;
 import ru.apolyakov.social_network.service.UserServiceImpl;
 
 @Component
@@ -14,7 +15,7 @@ public class ProfileValidator  implements Validator {
     private EmailValidator emailValidator = EmailValidator.getInstance();
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     // The classes are supported by this validator.
     @Override
