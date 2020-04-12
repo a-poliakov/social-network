@@ -44,7 +44,7 @@ public class UserController {
     public String users(Model model) {
         List<UserDto> userDtos = userService.loadUsersList();
         model.addAttribute("users", userDtos);
-        return "/users";
+        return "users";
     }
 
     @PostMapping("/friend")
@@ -58,34 +58,34 @@ public class UserController {
     public String root(Model model) {
         ProfileDto profileDto = userService.loadProfile();
         model.addAttribute("appUser", profileDto);
-        return "/index";
+        return "index";
     }
 
     @GetMapping("/index")
     public String home(Model model) {
         ProfileDto profileDto = userService.loadProfile();
         model.addAttribute("appUser", profileDto);
-        return "/index";
+        return "index";
     }
 
     @GetMapping("/admin")
     public String admin() {
-        return "/admin";
+        return "admin";
     }
 
     @GetMapping("/user")
     public String user() {
-        return "/user";
+        return "user";
     }
 
     @GetMapping("/about")
     public String about() {
-        return "/about";
+        return "about";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/registerSuccessful")
@@ -138,7 +138,7 @@ public class UserController {
 
     @GetMapping("/403")
     public String error403() {
-        return "/error/access-denied";
+        return "error/access-denied";
     }
 
 }
