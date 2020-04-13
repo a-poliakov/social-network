@@ -16,6 +16,8 @@ public interface UserService extends UserDetailsService {
 
     ProfileDto loadProfile() throws AuthenticationException;
 
+    ProfileDto loadProfile(int userId) throws AuthenticationException;
+
     List<UserDto> loadUsersList() throws AuthenticationException;
 
     void addFriend(int friendId);

@@ -1,14 +1,192 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
+
 <head>
-    <title>Secured</title>
+    <title>НаКарантине - Профиль</title>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <h1>This is a secured page!</h1>
-    <p><a href="/" th:href="@{/}">Back to home page</a></p>
+<!--    <h1 th:inline="text">Добро пожаловать на самоизоляцию, [[${appUser.firstName}]]!</h1>-->
+
+    <div class="container">
+        <div class="form-row">
+            <div class="tab-content no-border padding-24">
+                <div id="home" class="tab-pane in active">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 center">
+							<span class="profile-picture">
+								<img class="editable img-responsive" alt=" Avatar" id="avatar2" th:src="${appUser.gender == T(ru.apolyakov.social_network.model.Gender).female ? 'http://bootdey.com/img/Content/avatar/avatar3.png' : 'http://bootdey.com/img/Content/avatar/avatar6.png'}">
+							</span>
+
+                            <div class="space space-4"></div>
+
+<!--                            <a href="#" class="btn btn-sm btn-block btn-success">-->
+<!--                                <i class="ace-icon fa fa-plus-circle bigger-120"></i>-->
+<!--                                <span class="bigger-110">Add as a friend</span>-->
+<!--                            </a>-->
+
+                            <a href="#" class="btn btn-sm btn-block btn-primary">
+                                <i class="ace-icon fa fa-envelope-o bigger-110"></i>
+                                <span class="bigger-110">Send a message</span>
+                            </a>
+                        </div><!-- /.col -->
+
+                        <div class="col-xs-12 col-sm-9">
+                            <h4 class="blue">
+                                <span class="middle" th:utext="${appUser.firstName + ' ' + appUser.secondName}">..</span>
+
+                                <span class="label label-purple arrowed-in-right">
+									<i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+									online
+								</span>
+                            </h4>
+
+                            <div class="profile-user-info">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Username </div>
+
+                                    <div class="profile-info-value">
+                                        <span th:utext="${appUser.login}">..</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Location </div>
+
+                                    <div class="profile-info-value">
+                                        <i class="fa fa-map-marker light-orange bigger-110"></i>
+                                        <span>Russia</span>
+                                        <span th:utext="${appUser.city}">..</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Age </div>
+
+                                    <div class="profile-info-value">
+                                        <span th:utext="${appUser.age}">..</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Gender </div>
+
+                                    <div class="profile-info-value">
+                                        <span th:utext="${appUser.gender}">..</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Joined </div>
+
+                                    <div class="profile-info-value">
+                                        <span>2010/06/20</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Last Online </div>
+
+                                    <div class="profile-info-value">
+                                        <span>3 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hr hr-8 dotted"></div>
+
+                            <div class="profile-user-info">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Website </div>
+
+                                    <div class="profile-info-value">
+                                        <a href="#" target="_blank">www.alexdoe.com</a>
+                                    </div>
+                                </div>
+
+<!--                                <div class="profile-info-row">-->
+<!--                                    <div class="profile-info-name">-->
+<!--                                        <i class="middle ace-icon fa fa-facebook-square bigger-150 blue"></i>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="profile-info-value">-->
+<!--                                        <a href="#">Find me on Facebook</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="profile-info-row">-->
+<!--                                    <div class="profile-info-name">-->
+<!--                                        <i class="middle ace-icon fa fa-twitter-square bigger-150 light-blue"></i>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="profile-info-value">-->
+<!--                                        <a href="#">Follow me on Twitter</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+
+                    <div class="space-20"></div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="widget-box transparent">
+                                <div class="widget-header widget-header-small">
+                                    <h4 class="widget-title smaller">
+                                        <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                                        Little About Me
+                                    </h4>
+                                </div>
+
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <p th:utext="${appUser.interests}">..</p>
+                                        <p>
+                                            Thanks for visiting my profile.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /#home -->
+            </div>
+
+            <div class="col-md-6">
+                <h2>Список зараженных:</h2>
+                <table class="table table-sm table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Фамилия</th>
+                        <th scope="col">Пол</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each ="friend : ${appUser.friends}">
+                        <td scope="row">
+                            <a th:href="@{/user/{userId}(userId=${friend.id})}" th:utext="${friend.login}">...</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/user/{userId}(userId=${friend.id})}" th:utext="${friend.firstName}">...</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/user/{userId}(userId=${friend.id})}" th:utext="${friend.secondName}">...</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/user/{userId}(userId=${friend.id})}" th:utext="${friend.gender}">...</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>

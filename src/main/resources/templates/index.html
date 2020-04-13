@@ -1050,16 +1050,23 @@
                         <th scope="col">#</th>
                         <th scope="col">Имя</th>
                         <th scope="col">Фамилия</th>
-                        <th scope="col">Username</th>
+                        <th scope="col">Пол</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each ="friend : ${appUser.friends}">
-                        <td scope="row" th:utext="${friend.login}">...</td>
-                        <td th:utext="${friend.firstName}">...</td>
-                        <td th:utext="${friend.secondName}">...</td>
-                        <td th:utext="${friend.login}">...</td>
-                        <td th:utext="${friend.gender}">...</td>
+                        <td scope="row">
+                            <a th:href="@{/user/{userId}(userId=${friend.id})}" th:utext="${friend.login}">...</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/user/{userId}(userId=${friend.id})}" th:utext="${friend.firstName}">...</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/user/{userId}(userId=${friend.id})}" th:utext="${friend.secondName}">...</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/user/{userId}(userId=${friend.id})}" th:utext="${friend.gender}">...</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

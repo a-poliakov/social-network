@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-@Transactional
+//@Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl  implements UserService {
@@ -67,6 +67,16 @@ public class UserServiceImpl  implements UserService {
             return UserConverter.convertToProfile(currentUser.get(), UserConverter.convertToUserDto(friends).stream().peek(dto -> dto.setFriend(Boolean.TRUE)).collect(Collectors.toList()));
         }
         throw new UsernameNotFoundException("User hasn't logged in!");
+    }
+
+    @Override
+    public ProfileDto loadProfile(int userId) throws AuthenticationException {
+        Optional<User> currentUser = userDao.findById((long) userId);
+        if(currentUser.isPresent()) {
+            List<User> friends = userDao.findFriends((long) currentUser.get().getId());
+            return UserConverter.convertToProfile(currentUser.get(), UserConverter.convertToUserDto(friends).stream().peek(dto -> dto.setFriend(Boolean.TRUE)).collect(Collectors.toList()));
+        }
+        throw new UsernameNotFoundException("User hasn't found!");
     }
 
     @Override

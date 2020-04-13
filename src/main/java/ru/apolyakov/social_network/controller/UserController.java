@@ -54,6 +54,20 @@ public class UserController {
         return "redirect:/users";
     }
 
+    @GetMapping("/user/{userId}")
+    public String getUser(@PathVariable(name = "userId") Integer userId, Model model) {
+        if (userId == null) {
+            return "redirect:/users";
+        }
+        Long currentUserId = userService.getCurrentUserId();
+        if (currentUserId == null || currentUserId.intValue() == userId) {
+            return "redirect:/index";
+        }
+        ProfileDto profileDto  = userService.loadProfile(userId);
+        model.addAttribute("appUser", profileDto);
+        return "user/index";
+    }
+
 
     @GetMapping("/")
     public String root(Model model) {
