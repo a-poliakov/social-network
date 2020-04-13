@@ -1,5 +1,7 @@
 # Социальная сеть "НаКарантине"
 
+Live demo: https://polyakov-a-social-network.herokuapp.com
+
 <img src="img/profile.png" alt = "Профиль пользователя" width="320px" height="240px"/>
 <img src="img/users_list.png" alt = "Список пользователе" width="320px" height="240px"/>
 
