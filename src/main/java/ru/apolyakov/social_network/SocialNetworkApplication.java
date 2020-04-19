@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SocialNetworkApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SocialNetworkApplication.class, args);
+		char ch = '\u0031' + '\u0035';
+		System.out.println(ch);
+		//SpringApplication.run(SocialNetworkApplication.class, args);
 	}
 
 }
