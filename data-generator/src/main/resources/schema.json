@@ -1,0 +1,104 @@
+{
+  "output": {
+    "type": "sql-file",
+    "props": {
+      "pathProvider":"const",
+      "file": "${tmp}/a.sql",
+      "format": "sql"
+    }
+  },
+  "templates": [
+    {
+      "id": "user",
+      "count": 1000000,
+      "name": "users",
+      "fields": [
+        {
+          "name": "id",
+          "type": "long",
+          "provider": {
+            "name": "expr",
+            "props": {
+              "expr": "userId++"
+            }
+          }
+        },
+        {
+          "name": "login",
+          "type": "string",
+          "provider": {
+            "name": "email"
+          }
+        } ,
+        {
+          "name": "password",
+          "type": "string",
+          "provider": {
+            "name": "password-provider"
+          }
+        } ,
+        {
+          "name": "first_name",
+          "type": "string",
+          "provider": {
+            "name": "people-name"
+          }
+        },
+        {
+          "name": "second_name",
+          "type": "string",
+          "provider": {
+            "name": "people-name"
+          }
+        },
+        {
+          "name": "city",
+          "type": "string",
+          "provider": {
+            "name": "country"
+          }
+        },
+        {
+          "name": "age",
+          "type": "int",
+          "provider": {
+            "name": "random",
+            "props": {
+              "size": 100
+            }
+          }
+        },
+        {
+          "name": "sex",
+          "type": "string",
+          "provider": {
+            "name": "select",
+            "props": {
+              "items": "male,female"
+            }
+          }
+        },
+        {
+          "name": "interests",
+          "type": "string",
+          "provider": {
+            "name": "random",
+            "props": {
+              "size": 255
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "name": "userId",
+      "type": "long",
+      "initValue": "200"
+    }
+  ],
+  "root": [
+    "user"
+  ]
+}
