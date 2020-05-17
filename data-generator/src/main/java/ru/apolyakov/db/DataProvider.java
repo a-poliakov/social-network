@@ -16,7 +16,7 @@ public class DataProvider {
     private SqlScriptRunner sqlScriptRunner;
 
     @PostConstruct
-    private Connection prepareConnection() throws SQLException {
+    public Connection prepareConnection() throws SQLException {
         try {
             //Class.forName("org.hsqldb.jdbcDriver");
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -25,7 +25,7 @@ public class DataProvider {
         }
         //Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:test_data_generator;shutdown=true", "root", "example");
         Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/social_network", "root", "example");
-        sqlScriptRunner = new SqlScriptRunner(conn, true, true);
+        sqlScriptRunner = new SqlScriptRunner(conn, true, false);
 //        sqlScriptRunner.runScript(new InputStreamReader(DataProvider.class.getClassLoader()
 //                .getResourceAsStream(getDbSchemaResource())));
         return conn;

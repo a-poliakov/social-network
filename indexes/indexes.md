@@ -13,7 +13,7 @@
 Анализатор для запроса 
 ```sql
 select * from social_network.users
-where first_name LIKE 'Sa%' and second_name LIKE 'Ve%'
+where first_name LIKE 'An%' and second_name LIKE 'Ve%'
 order by id;
 ```
 
@@ -127,7 +127,7 @@ create index second_name_idx on social_network.users(second_name);
 }
 ```
 
-### Результаты мониторинга:
+### Результаты нагрузки:
 
 Без индексов cost выполнения запроса по оценке оптимизатора составил **10352.25**.
 
@@ -137,11 +137,11 @@ create index second_name_idx on social_network.users(second_name);
 
 1. Без индексов:
 
-   ![Alt text](/img/latency1.png "Latency without indexes")
+   ![Alt text](img/latency1.png "Latency without indexes")
    
-   ![Alt text](/img/throughput1.png "Throughput without indexes")
+   ![Alt text](img/throughput1.png "Throughput without indexes")
 2. С индексом `first_second_name_idx`:
 
-   ![Alt text](/img/latency2.png "Latency without indexes")
+   ![Alt text](img/latency2.png "Latency without indexes")
    
-   ![Alt text](/img/throughput2.png "Throughput without indexes")
+   ![Alt text](img/throughput2.png "Throughput without indexes")
