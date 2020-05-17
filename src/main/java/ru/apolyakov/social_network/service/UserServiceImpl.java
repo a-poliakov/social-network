@@ -6,11 +6,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.apolyakov.social_network.dao.JdbcUserDao;
 import ru.apolyakov.social_network.dto.ProfileDto;
 import ru.apolyakov.social_network.dto.UserConverter;
@@ -40,12 +38,16 @@ public class UserServiceImpl  implements UserService {
     @Override
     public Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null &&  authentication.getPrincipal() != null ) {
+        if (authentication != null &&  authentication.getPrincipal() != null && !isAnonimous(authentication)) {
             org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
             Optional<User> byLogin = userDao.findByLogin(principal.getUsername());
             return byLogin.isPresent() ? (long) byLogin.get().getId() : null;
         }
         return null;
+    }
+
+    private boolean isAnonimous(Authentication authentication) {
+        return !authentication.isAuthenticated() || authentication.getPrincipal() instanceof String && authentication.getPrincipal().equals("anonymousUser");
     }
 
     @Override
@@ -126,5 +128,14 @@ public class UserServiceImpl  implements UserService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public List<UserDto> searchByFirstAndSecondName(String firstNamePattern, String secondNamePattern) {
+        List<Optional<User>> optionalList = userDao.findUserLikeFirstNameAndLikeSecondName(firstNamePattern, secondNamePattern);
+        return optionalList.stream()
+                .filter(Optional::isPresent)
+                .map(optional -> UserConverter.convertToUserDto(optional.get()))
+                .collect(Collectors.toList());
     }
 }

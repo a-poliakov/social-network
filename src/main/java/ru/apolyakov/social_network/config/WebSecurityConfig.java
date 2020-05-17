@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.apolyakov.social_network.service.UserService;
-import ru.apolyakov.social_network.service.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +35,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registerSuccessful", "/register",
+                .antMatchers("/registerSuccessful", "/register", "/api/**",
                         "/js/**",
                         "/css/**",
                         "/img/**",

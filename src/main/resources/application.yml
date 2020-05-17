@@ -31,4 +31,14 @@ spring:
 #    servlet:
 #      content-type: text/html
 
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        jdbc:
+#          core:
+#            JdbcTemplate: trace
+#            namedparam:
+#              NamedParameterJdbcTemplate: trace
+
 

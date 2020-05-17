@@ -10,6 +10,8 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     UserDto findUserByLogin(String login);
 
+    List<UserDto> searchByFirstAndSecondName(String firstNamePattern, String secondNamePattern);
+
     Long getCurrentUserId();
 
     ProfileDto register(ProfileDto profileDto);
