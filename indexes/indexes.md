@@ -145,3 +145,13 @@ create index second_name_idx on social_network.users(second_name);
    ![Alt text](img/latency2.png "Latency without indexes")
    
    ![Alt text](img/throughput2.png "Throughput without indexes")
+   
+### Рефлексия (todo):
+
+Что можно улучшить?
+
+- Скорректировать датасет. Основной нюанс (и почему это важно), на реальных данных селективность имени и фамилии, как правило, разная. 
+Поэтому работа с индексом (first_name, last_name) и (last_name, first_name) будет разной по эффективности.
+
+- Сравнить explain запросов по отдельным индексам явно, а также сравнить разницу между последовательностью столбцов в индексе. 
+Ну и также построить графики latency и throughput по всем замерам.
