@@ -1,8 +1,21 @@
 server:
   port: ${PORT:8083}
 
+replication:
+  master:
+    url: localhost:4406
+    username: ${JDBC_DATABASE_USERNAME:root}
+    password: ${JDBC_DATABASE_PASSWORD:example}
+  slave:
+    url: localhost:5506
+    username: ${JDBC_DATABASE_USERNAME:root}
+    password: ${JDBC_DATABASE_PASSWORD:example}
+
 ## MySQL
 spring:
+  jpa:
+    hibernate:
+      ddl-auto=update:none
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME:root}

@@ -59,7 +59,7 @@ public class UserController {
         if (userId == null) {
             return "redirect:/users";
         }
-        Long currentUserId = userService.getCurrentUserId();
+        Integer currentUserId = userService.getCurrentUserId();
         if (currentUserId == null || currentUserId.intValue() == userId) {
             return "redirect:/index";
         }

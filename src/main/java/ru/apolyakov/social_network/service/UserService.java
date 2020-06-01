@@ -12,7 +12,7 @@ public interface UserService extends UserDetailsService {
 
     List<UserDto> searchByFirstAndSecondName(String firstNamePattern, String secondNamePattern);
 
-    Long getCurrentUserId();
+    Integer getCurrentUserId();
 
     ProfileDto register(ProfileDto profileDto);
 
