@@ -3,7 +3,7 @@
 ### Предварительная настройка:
 Исходные файлы для настройки асинхронной репликации mysql взяты отсюда: https://github.com/vbabak/docker-mysql-master-slave
 
-Поднимается один master узел и один slave узла (настройка выполнялась по руководству [README.md](./README.md).
+Поднимается один master узел и один slave узел (настройка выполнялась по руководству [README.md](README.md)).
 
 Нагрузка на кластер мониторится с помощью prometheus+grafana отсюда:
 - [Docker Compose файлы](https://github.com/stefanprodan/dockprom)

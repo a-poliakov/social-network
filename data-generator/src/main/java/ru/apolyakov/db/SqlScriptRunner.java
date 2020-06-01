@@ -1,34 +1,37 @@
 package ru.apolyakov.db;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Tool to run database scripts
  */
-public class SqlScriptRunner implements AutoCloseable {
+@Slf4j
+public class SqlScriptRunner {
 
     private static final String DEFAULT_DELIMITER = ";";
 
-    private Connection connection;
+    private JdbcTemplate jdbcTemplate;
 
     private boolean stopOnError;
-    private boolean autoCommit;
 
     private String delimiter = DEFAULT_DELIMITER;
     private boolean fullLineDelimiter = false;
 
+    private static AtomicLong proceedCount = new AtomicLong(0L);
+    private static AtomicLong proceedWithError = new AtomicLong(0L);
+
+
     /**
      * Default constructor
      */
-    public SqlScriptRunner(Connection connection, boolean autoCommit,
-                           boolean stopOnError) {
-        this.connection = connection;
-        this.autoCommit = autoCommit;
+    public SqlScriptRunner(JdbcTemplate jdbcTemplate, boolean stopOnError) {
+        this.jdbcTemplate = jdbcTemplate;
         this.stopOnError = stopOnError;
     }
 
@@ -38,117 +41,69 @@ public class SqlScriptRunner implements AutoCloseable {
     }
 
     /**
-     * Runs an SQL script (read in using the Reader parameter)
-     *
-     * @param reader - the source of the script
-     */
-    public void runScript(Reader reader) throws IOException, SQLException {
-        try {
-            boolean originalAutoCommit = connection.getAutoCommit();
-            try {
-                if (originalAutoCommit != this.autoCommit) {
-                    connection.setAutoCommit(this.autoCommit);
-                }
-                runScript(connection, reader);
-            } finally {
-                connection.setAutoCommit(originalAutoCommit);
-            }
-        } catch (IOException | SQLException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException("Error running script.  Cause: " + e, e);
-        }
-    }
-
-    /**
      * Runs an SQL script (read in using the Reader parameter) using the
      * connection passed in
      *
-     * @param conn   - the connection to use for the script
      * @param reader - the source of the script
-     * @throws SQLException if any SQL errors occur
-     * @throws IOException  if there is an error reading from the Reader
+     * @throws IOException if there is an error reading from the Reader
      */
-    private void runScript(Connection conn, Reader reader) throws IOException,
-            SQLException {
+    public void runScript(Reader reader) throws IOException {
+        proceedCount.set(0L);
+        proceedWithError.set(0L);
         StringBuffer command = null;
         try {
             LineNumberReader lineReader = new LineNumberReader(reader);
-            String line = null;
+            String line;
             while ((line = lineReader.readLine()) != null) {
                 if (command == null) {
                     command = new StringBuffer();
                 }
                 String trimmedLine = line.trim();
-                if (trimmedLine.startsWith("--")) {
-                } else if (trimmedLine.length() < 1
-                        || trimmedLine.startsWith("//")) {
-                } else if (trimmedLine.length() < 1
-                        || trimmedLine.startsWith("--")) {
+                if (trimmedLine.startsWith("--") || trimmedLine.length() < 1 || trimmedLine.startsWith("//")) {
                 } else if (!fullLineDelimiter
                         && trimmedLine.endsWith(getDelimiter())
                         || fullLineDelimiter
                         && trimmedLine.equals(getDelimiter())) {
-                    command.append(line.substring(0, line
-                            .lastIndexOf(getDelimiter())));
+                    command.append(line, 0, line
+                            .lastIndexOf(getDelimiter()));
                     command.append(" ");
-                    Statement statement = conn.createStatement();
 
                     boolean hasResults = false;
                     if (stopOnError) {
-                        hasResults = statement.execute(command.toString());
+                        jdbcTemplate.execute(command.toString());
+                        //hasResults = statement.execute(command.toString());
+                        proceedCount.incrementAndGet();
+                        log.info("Proceed successful {}.", proceedCount.get());
                     } else {
                         try {
-                            statement.execute(command.toString());
-                        } catch (SQLException e) {
+                            jdbcTemplate.execute(command.toString());
+                            proceedCount.incrementAndGet();
+                            log.info("Proceed successful {}.", proceedCount.get());
+                        } catch (Exception e) {
                             e.fillInStackTrace();
-                            printlnError("Error executing: " + command);
-                            printlnError(e);
+                            log.error("Error executing: " + command);
+                            log.error(e.toString());
+                            proceedWithError.incrementAndGet();
+                            log.error("Proceed  with errors {}.", proceedWithError.get());
                         }
                     }
-
-                    if (autoCommit && !conn.getAutoCommit()) {
-                        conn.commit();
-                    }
-
-                    command = null;
-                    try {
-                        statement.close();
-                    } catch (Exception e) {
-                        // Ignore to workaround a bug in Jakarta DBCP
-                    }
-                    Thread.yield();
+                    command = new StringBuffer();
                 } else {
                     command.append(line);
                     command.append(" ");
                 }
             }
-            if (!autoCommit) {
-                conn.commit();
-            }
-        } catch (SQLException | IOException e) {
+            log.info("Proceed successful {}/{} and with errors {}.", proceedCount.get(), proceedCount.get() + proceedWithError.get(), proceedWithError.get());
+        } catch (Exception e) {
+            log.info("Proceed successful {}/{} and with errors {}.", proceedCount.get(), proceedCount.get() + proceedWithError.get(), proceedWithError.get());
             e.fillInStackTrace();
-            printlnError("Error executing: " + command);
-            printlnError(e);
+            log.error("Error executing: " + command);
+            log.error(e.toString());
             throw e;
-        } finally {
-            conn.rollback();
         }
     }
 
     private String getDelimiter() {
         return delimiter;
-    }
-
-    private void printlnError(Object o) {
-        System.out.println(o);
-    }
-
-    @Override
-    public void close() throws Exception {
-        if (connection != null) {
-            connection.close();
-            connection = null;
-        }
     }
 }

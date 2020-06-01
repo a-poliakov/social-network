@@ -17,7 +17,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-security.version>5.0.13.RELEASE</spring-security.version>
+        <spring-security.version>5.0.6.RELEASE</spring-security.version>
         <spring.version>5.0.6.RELEASE</spring.version>
     </properties>
 
@@ -26,6 +26,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <!-- MySQL JDBC driver -->
         <dependency>
