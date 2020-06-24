@@ -15,15 +15,28 @@
 
 ### Описание API
 
-Чаты:
+**Чаты:**
 - Создание чата
 `POST /api/chats`
 - Получение списка чатов пользователя
-`GET /api/chats/user`
+`GET /api/chats/{userId}`
+- Изменение названия чата
+`PUT /api/chats/chat/{chatId}`
+- Удаление чата
+`DELETE /api/chats/chat/{chatId}`
+
+TODO:
+- добавление пользователя в чат
+- удаление пользователя из чата
 
 
-Сообщения:
-- Получения сообщений, относящихся к заданному чату
-`GET /api/messages`
-- Создание сообщения в заданном чате
-`POST /api/messages`
+**Сообщения:**
+- Получения сообщений, относящихся к заданному чату 
+(начиная с указанного timestamp-a, с заданным максимальным кол-вом сообщений).<br/>
+`GET /api/messages?chatId={chatId}&fromDate={fromDate}&count={count}`
+- Создание сообщения в заданном чате<br/>
+`POST /api/messages?chatId={chatId}&fromDate={fromDate}&date={date}&text={text}`
+- Редактирование текста сообщения
+`PUT /api/messages/{messageId}`
+- Удаление сообщения
+`DELETE /api/messages/{messageId}`

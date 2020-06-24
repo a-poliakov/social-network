@@ -8,6 +8,7 @@ import ru.apolyakov.social_network.repository.ChatRepository;
 import ru.apolyakov.social_network.service.ChatService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -25,5 +26,22 @@ public class ChatServiceImpl implements ChatService {
                 .setToUserId(toUser)
                 .setCreatedAt(date);
         return chatRepository.insert(chat);
+    }
+
+    public Chat changeTitle(String chatId, String label) {
+        Optional<Chat> byId = chatRepository.findById(chatId);
+        if (byId.isPresent()) {
+            Chat chat = byId.get();
+            chat.setLabel(label);
+            chatRepository.save(chat);
+            return chat;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteChat(String chatId) {
+        chatRepository.deleteById(chatId);
+        return true;
     }
 }
