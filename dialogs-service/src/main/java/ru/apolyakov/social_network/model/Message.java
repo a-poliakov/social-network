@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @EqualsAndHashCode(of = "id")
 @Document
 @CompoundIndexes({
-        @CompoundIndex(name = "chatId_dateCreated", def = "{'chatId' : 1, 'dateCreated': -1}")
+        @CompoundIndex(name = "chatId_createdAt", def = "{'chatId' : 1, 'createdAt': -1}")
 })
 public class Message {
     @Id
@@ -24,9 +24,9 @@ public class Message {
 
     private String chatId;
 
-    private Long dateCreated;
+    private Long createdAt;
 
     private Long fromId;
 
-    private String textMessage;
+    private String messageBody;
 }

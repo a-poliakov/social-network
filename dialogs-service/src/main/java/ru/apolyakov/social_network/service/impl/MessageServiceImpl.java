@@ -25,9 +25,9 @@ public class MessageServiceImpl implements MessageService {
     public Message createMessage(String chatId, Long fromId, Long date, String text) {
         Message messageDoc = new Message()
                 .setChatId(chatId)
-                .setDateCreated(date)
+                .setCreatedAt(date)
                 .setFromId(fromId)
-                .setTextMessage(text);
+                .setMessageBody(text);
         return messageRepository.insert(messageDoc);
     }
 }

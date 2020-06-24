@@ -21,9 +21,9 @@ public class ChatServiceImpl implements ChatService {
 
     public Chat createChat(Long fromUser, Long toUser, Long date, String label) {
         Chat chat = new Chat()
-                .setFromUser(fromUser)
-                .setToUser(toUser)
-                .setDateCreated(date);
+                .setFromUserId(fromUser)
+                .setToUserId(toUser)
+                .setCreatedAt(date);
         return chatRepository.insert(chat);
     }
 }

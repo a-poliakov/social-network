@@ -9,7 +9,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       #uri: mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019/?replicaSet=rs-0
-      database=social_chat
+      database=social_network
       host=localhost
       port=27017
       username=

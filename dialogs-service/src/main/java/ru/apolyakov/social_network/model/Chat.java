@@ -17,17 +17,17 @@ import javax.persistence.Id;
 @EqualsAndHashCode(of = "id")
 @Document
 @CompoundIndexes({
-        @CompoundIndex(name = "fromUser_dateCreated", def = "{'fromUser' : 1, 'dateCreated': -1}")
+        @CompoundIndex(name = "fromUser_createdAt", def = "{'fromUserId' : 1, 'createdAt': -1}")
 })
 public class Chat {
     @Id
     private String id;
 
     //todo: group chats
-    private Long fromUser;
-    private Long toUser;
+    private Long fromUserId;
+    private Long toUserId;
 
     private String label;
 
-    private Long dateCreated;
+    private Long createdAt;
 }
