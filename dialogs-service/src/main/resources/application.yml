@@ -1,0 +1,19 @@
+server:
+  port: 8089
+
+spring:
+  mongodb:
+    embedded:
+      enabled: true
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      #uri: mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019/?replicaSet=rs-0
+      database=social_chat
+      host=localhost
+      port=27017
+      username=
+      password=
+    mongo:
+      repositories:
+        enabled: true
