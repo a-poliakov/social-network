@@ -1,6 +1,6 @@
 # Отчет "Масштабируемый микросервис диалогов"
 
-Исходный код микросервиса диалогов [здесь](/dialogs-service).
+Исходный код микросервиса диалогов [здесь](/dialogs-service) (также описание REST API микросервиса).
 
 **Цель:** В результате выполнения ДЗ вы создадите базовый скелет микросервиса, который будет развиваться в дальнейших ДЗ. В данном задании тренируются навыки: - декомпозиции предметной области; - построения элементарной архитектуры проекта"
           Необходимо написать систему диалогов между пользователями. Обеспечить горизонтальное масштабирование хранилищ на запись с помощью шардинга. 
@@ -62,28 +62,28 @@ id-чата, к которому оно относится, timestamp време
 - CoucheDB, Cassandra
 
 Была выбрана NoSQL база данных **MongoDB**.
-Запускается с помощью docker-compose файла (https://github.com/chefsplate/mongo-shard-docker-compose).
+Запускается с помощью docker-compose файла (https://github.com/klingac/docker-compose-mongo-shard).
 
 Краткая инструкция по запуску:
-1. Поднять кластер mongoDB в докере.
-2. Создать базу данных **social_network**.
+- Поднять кластер mongoDB в докере (https://github.com/klingac/docker-compose-mongo-shard, https://github.com/chefsplate/mongo-shard-docker-compose).
+- Создать базу данных **social_network**.
 ```sql
 use social_network
 ```
-3. Включить шардинг для базы данных **social_network**.
+- Включить шардинг для базы данных **social_network**.
 ```js
 sh.enableSharding("social_network")
 ```
-4. Создать индекс по полям, входящим в ключ шардирования (fromId и dateCreated). 
+- Создать индекс по полям, входящим в ключ шардирования (fromId и dateCreated). 
 Сортируем по id-чата в ASC порядке, для timestamp-а в DESC порядке.
 ```js
 db.message.createIndex({"chatId": 1, "createdAt": -1})
 ```
-5. Включить шардинг для коллекции **message**.
+- Включить шардинг для коллекции **message**.
 ```js
 sh.shardCollection("social_network.message", {"chatId": 1, "createdAt": -1})
 ```
-6. Запустить экземпляр (экземпляры) микросервиса подсистемы диалогов.
+- Запустить экземпляр (экземпляры) микросервиса подсистемы диалогов **dialogs_service** (todo: добавить докер-образ микросервиса).
 
 ### JDBC Sharding Driver (на стороне приложения)
 
@@ -161,12 +161,15 @@ https://docs.mongodb.com/manual/core/sharding-balancer-administration/
 Перенос чанков между шардами обычно происходит автоматически:
 ![Alt text](https://docs.mongodb.com/manual/_images/sharding-migrating.bakedsvg.svg)
 
+Для ограничения и управления миграцией чанков между шардами есть возможность использовать зоны 
+(https://docs.mongodb.com/manual/core/zone-sharding/).
+
 Но также можно вручную перенести данные (в документации не рекомендуют так делать) с
 помощью команды:
 
 ```js
 db.adminCommand( { moveChunk : "social_network.chat",
-                   find : {chatId : "123456", createdAt : "1234567890"},
+                   find : {chatId : "123456fddr35543dsa34", createdAt : "1234567890"},
                    to : "mongodb-shard3.example.net" } )
 ```
 

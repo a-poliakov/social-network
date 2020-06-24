@@ -17,7 +17,7 @@
 
 **Чаты:**
 - Создание чата
-`POST /api/chats`
+`POST /api/chats?fromUser={fromUser}&toUser={toUser}&date={date}&label={label}`
 - Получение списка чатов пользователя
 `GET /api/chats/{userId}`
 - Изменение названия чата
