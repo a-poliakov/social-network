@@ -13,6 +13,6 @@ public interface ChatRepository extends MongoRepository<Chat, String> {
     List<Chat> findByLabel(String label);
 
     @Query(value="{fromUser: ?0}",
-            sort="{'dateCreated': -1}")
+            sort="{'createdAt': -1}")
     List<Chat> findByFromUser(Long fromUser);
 }

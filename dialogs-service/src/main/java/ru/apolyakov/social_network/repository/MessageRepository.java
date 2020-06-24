@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 @Repository
 public interface MessageRepository extends MongoRepository<Message, String> {
 
-    @Query(value="{chatId: ?0, dateCreated: {'$gt': ?1}}",
-            sort="{'dateCreated': -1}")
+    @Query(value="{chatId: ?0, createdAt: {'$gt': ?1}}",
+            sort="{'createdAt': -1}")
     Stream<Message> getByChatIdAndDateCreatedAfter(String chatId, LocalDate dateCreated);
 }
