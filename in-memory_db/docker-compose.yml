@@ -1,0 +1,49 @@
+version: '3'
+services:
+  mysql_master:
+    image: mysql:5.7
+    container_name: "mysql_master"
+    env_file:
+      - ./master/mysql_master.env
+    restart: "no"
+    ports:
+      - 4406:3306
+    volumes:
+      - ./master/conf/mysql.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+      - ./master/data:/var/lib/mysql
+    networks:
+      - test_tarantul
+
+  tarantool:
+    image: tarantool/tarantool:1.10.2
+    container_name: "tarantool"
+    networks:
+      - test_tarantul
+    ports:
+      - "3301:3301"
+    volumes:
+      - ./tarantool/conf/init.lua:/opt/tarantool/init.lua
+      - ./tarantool/conf/config.yml:/etc/tarantool/config.yml
+      - ./tarantool/data:/var/lib/tarantool
+    #    environment:
+    #      TARANTOOL_USER_NAME: root
+    #      TARANTOOL_USER_PASSWORD: example
+    #      TARANTOOL_REPLICATION: "tarantool1,tarantool2"
+
+#  tarantool2:
+#    image: tarantool/tarantool:1.10.2
+#    environment:
+#      TARANTOOL_REPLICATION: "tarantool1,tarantool2"
+#    networks:
+#      - test_tarantul
+#    ports:
+#      - "3302:3301"
+
+  replicator:
+    image: avpgenium/mysql-tarantool-replication:latest
+    container_name: "mysql-tarantool-replication"
+    networks:
+      - test_tarantul
+
+networks:
+  test_tarantul:

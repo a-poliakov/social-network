@@ -127,6 +127,10 @@ sh.shardCollection("social_network.message", {"chatId": 1, "createdAt": -1})
 todo: попробовать настроить (субъективно не очень понятно, как настраивать ProxySQL и 
 не получилось запустить Vitess) 
 
+ProxySQL github repository: https://github.com/sysown/proxysql
+
+Vitess java client: https://github.com/vitessio/vitess/blob/master/java/README.md
+
 ### PostgreSQL Foreign Data Wrapper
 интересно будет попробовать, но вроде почти также удобно как mongodb
 
@@ -152,6 +156,12 @@ https://docs.mongodb.com/manual/core/sharding-balancer-administration/
 
 Шардирование идет из коробки, но происходит автоматически. Теоретически можно настроить, 
 но сложнее чем в mongodb.
+
+[Synthetic Sharding with Cassandra. Or How To Deal With Large Partitions.](https://medium.com/@foundev/synthetic-sharding-in-cassandra-to-deal-with-large-partitions-2124b2fd788b)
+
+[Моделирование данных в Cassandra 2.0 на CQL3.](https://habr.com/ru/post/203200/)
+
+[Sharding - Apache CouchDB Documentation..](https://docs.huihoo.com/apache/couchdb/2.1/cluster/sharding.html)
 
 ## Процесс решардинга
 
