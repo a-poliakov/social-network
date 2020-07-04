@@ -21,6 +21,12 @@ spring:
     username: ${JDBC_DATABASE_USERNAME:root}
     password: ${JDBC_DATABASE_PASSWORD:example}
     initialization-mode: always
+
+  datasource-tarantool:
+    jdbc-url: jdbc:tarantool://localhost:3301?user=root&password=example
+    host: localhost:3301
+    #username=root
+    #password=example
   flyway:
     enabled: true
   #spring.datasource.driver-class-name=com.mysql.jdbc.Driver

@@ -3,9 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <modules>
-        <module>dialogs-service</module>
-    </modules>
+
+<!--    <modules>-->
+<!--        <module>dialogs-service</module>-->
+<!--    </modules>-->
+
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -104,6 +106,18 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>1.6</version>
+		</dependency>
+
+		<!-- TARANTOOL -->
+		<dependency>
+			<groupId>ru.shadam</groupId>
+			<artifactId>spring-data-tarantool</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.tarantool</groupId>
+			<artifactId>connector</artifactId>
+			<version>1.9.4</version>
 		</dependency>
 
 		<!-- hot swapping, disable cache for template, enable live reload -->
