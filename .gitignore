@@ -29,3 +29,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/in-memory_db/tarantool/data/00000000000000000000.snap
+/in-memory_db/tarantool/data/00000000000000000000.xlog

@@ -43,7 +43,7 @@ public class TarantoolUserService  {
                 .map(tupleConverter::fromTuple)
                 .findFirst();
     }
-    
+
     public List<UserDto> searchByFirstAndSecondName(String firstNamePattern, String secondNamePattern) {
         List<?> user = tarantoolClient.syncOps().call("search_by_first_second_name", "'" + firstNamePattern + "%'", "'" + secondNamePattern + "%'", 100);
         if (user.isEmpty()) {

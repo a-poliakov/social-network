@@ -20,7 +20,7 @@ mappings:
   - database: social_network
     table: users
     columns: [ id, login, password, first_name, last_name, sex, age, interests, city ]
-    space: user_space
+    space: users
     key_fields: [ 0 ]
     # insert_call: function_name
     # update_call: function_name
@@ -63,7 +63,7 @@ spaces:
   # приходится дополнять null'ами, чтобы количество полей было всегда одинаковым.
   #
   # column_id: { (string|integer|unsigned): value }
-  user_space:
+  users:
     replace_null:
       1: { string: "" }
       2: { string: "" }
