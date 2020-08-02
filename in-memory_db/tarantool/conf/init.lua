@@ -35,17 +35,22 @@ end
 -- Param: prefix_first_name - prefix for searching first name by like '%first_name'
 -- Param: prefix_second_name - prefix for searching second name by like '%second_name'
 -- Param: size - max count of entries in response
-function search_by_first_second_name(prefix_first_name, prefix_second_name, size)
+-- Param: offset - offset from data start position
+function search_by_first_second_name(prefix_first_name, prefix_second_name, size, offset)
     local count = 0
+    local step = 0
     local result = {}
     for _, tuple in box.space.users.index.first_second_name_idx:pairs(prefix_first_name, { iterator = 'GE' }) do
         if string.startswith(tuple[4], prefix_first_name, 1, -1) and string.startswith(tuple[5], prefix_second_name, 1, -1) then
-            table.insert(result, tuple)
-            count = count + 1
-            if count >= size then
-                return result
+            if step < offset then
+                step = step + 1
+            else
+                table.insert(result, tuple)
+                count = count + 1
+                if count >= size then
+                    return result
+                end
             end
-        end
     end
     return result
 end

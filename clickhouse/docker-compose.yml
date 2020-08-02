@@ -1,0 +1,40 @@
+version: '3'
+services:
+  mysql-db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+  clickhouse-server:
+    image: yandex/clickhouse-server:20.1.15.109
+    container_name: "clickhouse-server"
+    environment:
+      CLICKHOUSE_DB: social_network
+      CLICKHOUSE_USER: root
+      CLICKHOUSE_PASSWORD: example
+    ports:
+      - 8123:8123
+      - 9000:9000
+    volumes:
+    #      - ./clickhouse-server/config.xml:/etc/clickhouse-server/config.xml
+      - ./clickhouse-server/data:/var/lib/clickhouse
+      - ./clickhouse-server/init:/docker-entrypoint-initdb.d
+    networks:
+      - overlay
+
+  clickhouse-client:
+    image: yandex/clickhouse-client
+    container_name: "clickhouse-client"
+    command: ['--host', 'clickhouse-server']
+    volumes:
+      - ./script:/usr/scripts
+    networks:
+      - overlay
+
+
+networks:
+  overlay:
