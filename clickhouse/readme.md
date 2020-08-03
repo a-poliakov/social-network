@@ -47,10 +47,12 @@ CREATE TABLE social_network.users (
     date Date DEFAULT toDate(time),
     time DateTime DEFAULT now()
 )
-    ENGINE = MergeTree()
+    ENGINE = MergeTree(date, (age, sex), 8192)
     PARTITION BY (age,sex)
 ORDER BY id;
 ```
+Составной индекс по полям age и sex в движке MergeTree такой же как в MySQL. 
+Для гранулированности индекса оставлено значение по умолчанию равное 8192.
 
 Затем были перенесены данные из mysql в clickhouse:
 ```shell script

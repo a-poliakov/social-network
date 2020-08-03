@@ -11,6 +11,6 @@ CREATE TABLE social_network.users (
     date Date DEFAULT toDate(time),
     time DateTime DEFAULT now()
 )
-    ENGINE = MergeTree()
+    ENGINE = MergeTree(date, (age, sex), 8192)
     PARTITION BY (age,sex)
 ORDER BY id;
