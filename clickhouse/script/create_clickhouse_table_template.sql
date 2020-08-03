@@ -1,9 +1,9 @@
-CREATE TABLE default.user (
+CREATE TABLE social_network.users (
     id Int64,
     login String,
     password String,
     first_name String,
-    last_name String,
+    second_name String,
     age UInt8,
     sex UInt8,
     interests String,
