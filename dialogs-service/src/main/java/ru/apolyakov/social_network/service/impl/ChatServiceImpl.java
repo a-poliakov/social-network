@@ -21,10 +21,11 @@ public class ChatServiceImpl implements ChatService {
     }
 
     public Chat createChat(Long fromUser, Long toUser, Long date, String label) {
-        Chat chat = new Chat()
-                .setFromUserId(fromUser)
-                .setToUserId(toUser)
-                .setCreatedAt(date);
+        Chat chat = Chat.builder()
+                    .fromUserId(fromUser)
+                .toUserId(toUser)
+                    .createdAt(date)
+                .build();
         return chatRepository.insert(chat);
     }
 

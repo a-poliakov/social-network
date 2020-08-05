@@ -84,3 +84,7 @@ mysql даже быстрее немножко (возможно это из-з�
 1 млн | 1.023  | 1.387 
 10 млн | 181.380  | 2.562 
 100 млн | 739.530 | 9.613
+
+## Полезные ссылки
+1. [Семейство движков MergeTree](https://clickhouse.tech/docs/ru/engines/table-engines/mergetree-family/mergetree/)
+2. [clickhouse docker compose](https://github.com/rongfengliang/clickhouse-docker-compose)

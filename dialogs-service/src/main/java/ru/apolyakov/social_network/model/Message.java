@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Accessors(chain = true)
+@Builder
 @EqualsAndHashCode(of = "id")
 @Document
 @CompoundIndexes({

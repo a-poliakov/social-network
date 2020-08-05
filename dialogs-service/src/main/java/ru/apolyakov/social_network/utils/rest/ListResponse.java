@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import java.util.*;
 
-@Builder
 @Data
 @NoArgsConstructor
 @ToString

@@ -4,7 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
+import static ru.apolyakov.social_network.utils.rest.ResponseStatus.*;
+
 @Data
 @NoArgsConstructor
 public class Response<T> {

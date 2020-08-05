@@ -27,13 +27,13 @@ public class ChatRestController {
     public Response<Chat> createChat(@RequestParam("fromUser") Long fromUser, @RequestParam("toUser") Long toUser,
                                      @RequestParam("date") Long date, @RequestParam("label") String label) {
         Chat userChats = chatService.createChat(fromUser, toUser, date, label);
-        return new Response<>(userChats);
+        return new Response<Chat>(userChats);
     }
 
     @PutMapping("/chat/{chatId}")
     public Response<Chat> changeChatTitle(@PathVariable("chatId") String chatId, @RequestParam("label") String label) {
         Chat userChats = chatService.changeTitle(chatId, label);
-        return new Response<>(userChats);
+        return new Response<Chat>(userChats);
     }
 
     @DeleteMapping("/chat/{chatId}")

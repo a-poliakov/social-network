@@ -25,11 +25,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     public Message createMessage(String chatId, Long fromId, Long date, String text) {
-        Message messageDoc = new Message()
-                .setChatId(chatId)
-                .setCreatedAt(date)
-                .setFromId(fromId)
-                .setMessageBody(text);
+        Message messageDoc = Message.builder()
+                .chatId(chatId)
+                .createdAt(date)
+                .fromId(fromId)
+                .messageBody(text)
+                .build();
         return messageRepository.insert(messageDoc);
     }
 
