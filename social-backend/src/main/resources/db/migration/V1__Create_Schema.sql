@@ -1,4 +1,4 @@
-# create schema if not exists social_network;
+# create schema if not exists ru.apolyakov.social_network;
 
 create table if not exists users
 (

@@ -94,6 +94,13 @@
 				<artifactId>springfox-swagger-ui</artifactId>
 				<version>${swagger.version}</version>
 			</dependency>
+
+			<!-- Rabbit -->
+			<dependency>
+				<groupId>com.rabbitmq</groupId>
+				<artifactId>amqp-client</artifactId>
+				<version>5.4.3</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>

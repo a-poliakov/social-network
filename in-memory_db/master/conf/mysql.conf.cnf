@@ -7,4 +7,4 @@ server-id = 1
 log_bin = /var/log/mysql/mysql-bin.log
 binlog_format = ROW
 gtid_mode=ON
-binlog_do_db = social_network
+binlog_do_db = ru.apolyakov.social_network

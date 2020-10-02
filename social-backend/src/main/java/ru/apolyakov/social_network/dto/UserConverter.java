@@ -1,12 +1,32 @@
 package ru.apolyakov.social_network.dto;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 import ru.apolyakov.social_network.model.User;
+import ru.apolyakov.social_network.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserConverter {
+@Component
+@RequiredArgsConstructor
+public class UserConverter implements Converter<Integer, UserDto> {
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDto convert(Integer userId) {
+        return userRepository.findById(userId)
+                .map(user -> UserDto.builder()
+                        .id(userId)
+                        .firstName(user.getFirstName())
+                        .secondName(user.getSecondName())
+                        .login(user.getLogin())
+                        .build())
+                .orElse(null);
+    }
+
     public static ProfileDto convertToProfile(User user, List<UserDto> friends) {
         return ProfileDto.builder()
                 .id(user.getId())

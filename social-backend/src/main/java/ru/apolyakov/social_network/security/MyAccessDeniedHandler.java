@@ -1,4 +1,4 @@
-package ru.apolyakov.social_network.config;
+package ru.apolyakov.social_network.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;

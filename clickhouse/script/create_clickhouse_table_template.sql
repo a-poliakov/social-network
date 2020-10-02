@@ -1,4 +1,4 @@
-CREATE TABLE social_network.users (
+CREATE TABLE ru.apolyakov.social_network.users (
     id Int64,
     login String,
     password String,

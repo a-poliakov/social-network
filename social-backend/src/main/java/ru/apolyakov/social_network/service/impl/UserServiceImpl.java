@@ -1,4 +1,4 @@
-package ru.apolyakov.social_network.service;
+package ru.apolyakov.social_network.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +15,7 @@ import ru.apolyakov.social_network.dto.UserConverter;
 import ru.apolyakov.social_network.dto.UserDto;
 import ru.apolyakov.social_network.model.User;
 import ru.apolyakov.social_network.repository.UserRepository;
+import ru.apolyakov.social_network.service.UserService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +39,7 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Integer getCurrentUserId() {
+    public Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null &&  authentication.getPrincipal() != null && !isAnonimous(authentication)) {
             org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();

@@ -18,9 +18,9 @@
 
 ## Настройка MySQL
 
-Для таблицы ``social_network.users`` был создан индекс:
+Для таблицы ``ru.apolyakov.social_network.users`` был создан индекс:
 ```mysql
-CREATE INDEX age_and_sex_idx ON social_network.users(age, sex);
+CREATE INDEX age_and_sex_idx ON ru.apolyakov.social_network.users(age, sex);
 ```
 
 ## Настройка ClickHouse и перенос данных
@@ -34,7 +34,7 @@ clickhouse-client -mn < create_clickhouse_table_template.sql
 
 Созданная таблица (скрипт из [create_clickhouse_table_template.sql](create_clickhouse_table_template.sql)):
 ```clickhouse
-CREATE TABLE social_network.users (
+CREATE TABLE ru.apolyakov.social_network.users (
     id Int64,
     login String,
     password String,
@@ -61,7 +61,7 @@ clickhouse-mysql \
     --src-user=root \
     --src-password=example \
     --migrate-table \
-    --src-tables=social_network.users \
+    --src-tables=ru.apolyakov.social_network.users \
     --dst-host=127.0.0.1
 ```
 

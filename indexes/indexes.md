@@ -14,7 +14,7 @@
 
 Анализатор для запроса 
 ```sql
-select * from social_network.users
+select * from ru.apolyakov.social_network.users
 where first_name LIKE 'An%' and second_name LIKE 'Ve%'
 order by id;
 ```
@@ -57,7 +57,7 @@ order by id;
           "interests",
           "city"
         ],
-        "attached_condition": "((`social_network`.`users`.`first_name` like 'An%') and (`social_network`.`users`.`second_name` like 'E%'))"
+        "attached_condition": "((`ru.apolyakov.social_network`.`users`.`first_name` like 'An%') and (`ru.apolyakov.social_network`.`users`.`second_name` like 'E%'))"
       }
     }
   }
@@ -67,9 +67,9 @@ order by id;
 Были добавлены 3 индекса:
 
 ```sql
-create index first_second_name_idx on social_network.users(first_name, second_name);
-create index first_name_idx on social_network.users(first_name);
-create index second_name_idx on social_network.users(second_name);
+create index first_second_name_idx on ru.apolyakov.social_network.users(first_name, second_name);
+create index first_name_idx on ru.apolyakov.social_network.users(first_name);
+create index second_name_idx on ru.apolyakov.social_network.users(second_name);
 ```
 
 в explain выбирает индекс `first_second_name_idx`.
@@ -105,7 +105,7 @@ create index second_name_idx on social_network.users(second_name);
         "rows_examined_per_scan": 2557,
         "rows_produced_per_join": 222,
         "filtered": "8.72",
-        "index_condition": "((`social_network`.`users`.`first_name` like 'An%') and (`social_network`.`users`.`second_name` like 'E%'))",
+        "index_condition": "((`ru.apolyakov.social_network`.`users`.`first_name` like 'An%') and (`ru.apolyakov.social_network`.`users`.`second_name` like 'E%'))",
         "cost_info": {
           "read_cost": "1128.62",
           "eval_cost": "22.29",

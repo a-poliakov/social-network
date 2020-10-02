@@ -17,7 +17,7 @@ mappings:
   # удаление записи в ней вызовет удаление записи и в Tarantool'е.
   # Удаление в следующих таблицах с таким-же id спейса удаления записи в Tarantool'е не вызовет,
   # вместо этого все поля будут забиты null'ами (с подстановкой, см. ниже)
-  - database: social_network
+  - database: ru.apolyakov.social_network
     table: users
     columns: [ id, login, password, first_name, last_name, sex, age, interests, city ]
     space: users

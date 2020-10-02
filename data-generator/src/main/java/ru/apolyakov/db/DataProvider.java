@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 @Component
 public class DataProvider {
-    private SqlScriptRunner sqlScriptRunner; // jdbc:mysql://127.0.0.1:3306/social_network
+    private SqlScriptRunner sqlScriptRunner; // jdbc:mysql://127.0.0.1:3306/ru.apolyakov.social_network
 
     public DataProvider(JdbcTemplate jdbcTemplate) {
         this.sqlScriptRunner = new SqlScriptRunner(jdbcTemplate, false);

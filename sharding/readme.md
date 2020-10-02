@@ -66,13 +66,13 @@ id-чата, к которому оно относится, timestamp време
 
 Краткая инструкция по запуску:
 - Поднять кластер mongoDB в докере (https://github.com/klingac/docker-compose-mongo-shard, https://github.com/chefsplate/mongo-shard-docker-compose).
-- Создать базу данных **social_network**.
+- Создать базу данных **ru.apolyakov.social_network**.
 ```sql
-use social_network
+use ru.apolyakov.social_network
 ```
-- Включить шардинг для базы данных **social_network**.
+- Включить шардинг для базы данных **ru.apolyakov.social_network**.
 ```js
-sh.enableSharding("social_network")
+sh.enableSharding("ru.apolyakov.social_network")
 ```
 - Создать индекс по полям, входящим в ключ шардирования (fromId и dateCreated). 
 Сортируем по id-чата в ASC порядке, для timestamp-а в DESC порядке.
@@ -81,7 +81,7 @@ db.message.createIndex({"chatId": 1, "createdAt": -1})
 ```
 - Включить шардинг для коллекции **message**.
 ```js
-sh.shardCollection("social_network.message", {"chatId": 1, "createdAt": -1})
+sh.shardCollection("ru.apolyakov.social_network.message", {"chatId": 1, "createdAt": -1})
 ```
 - Запустить экземпляр (экземпляры) микросервиса подсистемы диалогов **dialogs_service** (todo: добавить докер-образ микросервиса).
 
@@ -178,7 +178,7 @@ https://docs.mongodb.com/manual/core/sharding-balancer-administration/
 помощью команды:
 
 ```js
-db.adminCommand( { moveChunk : "social_network.chat",
+db.adminCommand( { moveChunk : "ru.apolyakov.social_network.chat",
                    find : {chatId : "123456fddr35543dsa34", createdAt : "1234567890"},
                    to : "mongodb-shard3.example.net" } )
 ```

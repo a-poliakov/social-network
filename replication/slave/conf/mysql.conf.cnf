@@ -6,5 +6,5 @@ skip-name-resolve
 server-id=2
 relay-log = /var/log/mysql/mysql-relay-bin.log
 log_bin = /var/log/mysql/mysql-bin.log
-binlog_do_db = social_network
+binlog_do_db = ru.apolyakov.social_network
 gtid_mode=ON

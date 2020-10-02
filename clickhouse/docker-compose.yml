@@ -13,7 +13,7 @@ services:
     image: yandex/clickhouse-server:20.1.15.109
     container_name: "clickhouse-server"
     environment:
-      CLICKHOUSE_DB: social_network
+      CLICKHOUSE_DB: ru.apolyakov.social_network
       CLICKHOUSE_USER: root
       CLICKHOUSE_PASSWORD: example
     ports:

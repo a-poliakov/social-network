@@ -7,7 +7,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.apolyakov.social_network.service.UserService;
-import ru.apolyakov.social_network.service.UserServiceImpl;
 
 @Component
 public class ProfileValidator  implements Validator {

@@ -14,7 +14,6 @@ import ru.apolyakov.social_network.dto.ProfileDto;
 import ru.apolyakov.social_network.dto.ProfileValidator;
 import ru.apolyakov.social_network.dto.UserDto;
 import ru.apolyakov.social_network.service.UserService;
-import ru.apolyakov.social_network.service.UserServiceImpl;
 
 import java.util.List;
 
