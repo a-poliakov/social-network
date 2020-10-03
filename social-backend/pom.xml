@@ -12,6 +12,29 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>social-backend</artifactId>
 
+    <properties>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -25,6 +48,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
+
         <!-- MySQL JDBC driver -->
         <dependency>
             <groupId>mysql</groupId>
@@ -140,28 +178,28 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!--			<plugin>-->
-            <!--				<groupId>com.spotify</groupId>-->
-            <!--				<artifactId>dockerfile-maven-plugin</artifactId>-->
-            <!--				<version>1.4.6</version>-->
-            <!--				<executions>-->
-            <!--					<execution>-->
-            <!--						<id>default</id>-->
-            <!--						<goals>-->
-            <!--							<goal>build</goal>-->
-            <!--							<goal>push</goal>-->
-            <!--						</goals>-->
-            <!--					</execution>-->
-            <!--				</executions>-->
-            <!--				<configuration>-->
-            <!--					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>-->
-            <!--					<repository>registry.heroku.com/${project.artifactId}/web</repository>-->
-            <!--					<tag>latest</tag>-->
-            <!--					<buildArgs>-->
-            <!--						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>-->
-            <!--					</buildArgs>-->
-            <!--				</configuration>-->
-            <!--			</plugin>-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.6</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+<!--                            <goal>push</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+<!--                    <useMavenSettingsForAuth>true</useMavenSettingsForAuth>-->
+<!--                    <repository>registry.heroku.com/${project.artifactId}/web</repository>-->
+                    <tag>latest</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

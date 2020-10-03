@@ -29,7 +29,7 @@ public class UserConverter implements Converter<Integer, UserDto> {
 
     public static ProfileDto convertToProfile(User user, List<UserDto> friends) {
         return ProfileDto.builder()
-                .id(user.getId())
+                .id((int)user.getId())
                 .login(user.getLogin())
                 .firstName(user.getFirstName())
                 .secondName(user.getSecondName())
@@ -49,7 +49,7 @@ public class UserConverter implements Converter<Integer, UserDto> {
 
     public static UserDto convertToUserDto(User user) {
         return UserDto.builder()
-                .id(user.getId())
+                .id((int)user.getId())
                 .login(user.getLogin())
                 .firstName(user.getFirstName())
                 .secondName(user.getSecondName())

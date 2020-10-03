@@ -14,9 +14,10 @@ public class WallPostToDtoConverter  implements Converter<WallPost, WallPostDto>
     public WallPostDto convert(WallPost wallPost) {
         return WallPostDto.builder()
                 .id(wallPost.getId())
-                .fromUser(userConverter.convert(wallPost.getFromUser()))
-                .setToUser(userConverter.convert(wallPost.getToUser()))
-                .setText(wallPost.getBody())
-                .setDateCreated(wallPost.getDateCreated().toString());
+                .fromUser(userConverter.convert(wallPost.getFromUser().intValue()))
+                .toUser(userConverter.convert(wallPost.getToUser().intValue()))
+                .text(wallPost.getBody())
+                .dateCreated(wallPost.getDateCreated().toString())
+                .build();
     }
 }

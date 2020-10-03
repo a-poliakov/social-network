@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import ru.apolyakov.social_network.dto.UserDto;
 import ru.apolyakov.social_network.model.User;
 import ru.apolyakov.social_network.model.WallPost;
 import ru.apolyakov.social_network.redis.RedisCacheService;
@@ -49,7 +50,8 @@ public class RabbitService {
     public void subscribeToFriendsPosts(User user) {
         List<Long> friendIds = userService.getUserFriends(user.getId())
                 .stream()
-                .map(UserInfoItemDto::getId)
+                .map(UserDto::getId)
+                .map(Long::valueOf)
                 .collect(Collectors.toList());
 
         try {

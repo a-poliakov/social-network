@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.apolyakov.social_network.dto.ProfileDto;
 import ru.apolyakov.social_network.dto.UserDto;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
@@ -12,7 +14,7 @@ public interface UserService extends UserDetailsService {
 
     List<UserDto> searchByFirstAndSecondName(String firstNamePattern, String secondNamePattern);
 
-    Integer getCurrentUserId();
+    Long getCurrentUserId();
 
     ProfileDto register(ProfileDto profileDto);
 
@@ -23,4 +25,6 @@ public interface UserService extends UserDetailsService {
     List<UserDto> loadUsersList() throws AuthenticationException;
 
     void addFriend(int friendId);
+
+    Collection<UserDto> getUserFriends(long userId);
 }

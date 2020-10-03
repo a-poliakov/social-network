@@ -17,3 +17,16 @@ spring:
     mongo:
       repositories:
         enabled: true
+
+  # ===============================
+  # SERVICE DISCOVERY
+  # ===============================
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        instance-id: ${spring.application.name}:${random.value}
+        enabled: true
+        health-check-interval: 10s
+#        health-check-path: /consul/health-check

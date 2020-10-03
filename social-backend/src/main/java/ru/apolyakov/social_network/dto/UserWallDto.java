@@ -10,6 +10,7 @@ import java.util.List;
 @ToString
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserWallDto implements Serializable {
     private Long userId;
     private List<WallPostDto> wallPosts = new LinkedList<>();

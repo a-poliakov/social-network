@@ -15,12 +15,47 @@
     <properties>
         <java.version>8</java.version>
         <swagger.version>2.9.2</swagger.version>
+        <project.build.finalName>dialogs-service</project.build.finalName>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
         </dependency>
 
         <dependency>
@@ -103,33 +138,55 @@
     </dependencies>
 
     <build>
+        <finalName>${project.build.finalName}</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+<!--                <version>${spring.boot.version}</version>-->
+                <configuration>
+                    <executable>true</executable>
+                    <finalName>${project.build.finalName}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
-            <!--			<plugin>-->
-            <!--				<groupId>com.spotify</groupId>-->
-            <!--				<artifactId>dockerfile-maven-plugin</artifactId>-->
-            <!--				<version>1.4.6</version>-->
-            <!--				<executions>-->
-            <!--					<execution>-->
-            <!--						<id>default</id>-->
-            <!--						<goals>-->
-            <!--							<goal>build</goal>-->
-            <!--							<goal>push</goal>-->
-            <!--						</goals>-->
-            <!--					</execution>-->
-            <!--				</executions>-->
-            <!--				<configuration>-->
-            <!--					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>-->
-            <!--					<repository>registry.heroku.com/${project.artifactId}/web</repository>-->
-            <!--					<tag>latest</tag>-->
-            <!--					<buildArgs>-->
-            <!--						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>-->
-            <!--					</buildArgs>-->
-            <!--				</configuration>-->
-            <!--			</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.6</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <!--            							<goal>push</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--            					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>-->
+                    <!--            					<repository>registry.heroku.com/${project.artifactId}/web</repository>-->
+                    <tag>dialogs-service</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

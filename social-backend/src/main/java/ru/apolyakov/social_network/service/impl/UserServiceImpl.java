@@ -17,10 +17,7 @@ import ru.apolyakov.social_network.model.User;
 import ru.apolyakov.social_network.repository.UserRepository;
 import ru.apolyakov.social_network.service.UserService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -61,7 +58,7 @@ public class UserServiceImpl  implements UserService {
         newUser = userRepository.save(newUser);
         //Optional<User> savedUser = userDao.findByLogin(profileDto.getLogin());
         //savedUser.ifPresent(user -> profileDto.setId(user.getId()));
-        profileDto.setId(newUser.getId());
+        profileDto.setId((int)newUser.getId());
         return profileDto;
     }
 
@@ -95,6 +92,7 @@ public class UserServiceImpl  implements UserService {
             Set<Integer> friendsIds = userRepository.findFriends((long) currentUser.get().getId())
                     .stream()
                     .map(User::getId)
+                    .map(Long::intValue)
                     .collect(Collectors.toSet());
             return UserConverter.convertToUserDto(userRepository.findAll())
                     .stream()
@@ -113,20 +111,31 @@ public class UserServiceImpl  implements UserService {
             Set<Integer> friendsIds = userRepository.findFriends((long) currentUser.get().getId())
                     .stream()
                     .map(User::getId)
+                    .map(Long::intValue)
                     .collect(Collectors.toSet());
             if (!friendsIds.contains(friendId)) {
-                userRepository.addFriendRelation(currentUser.get().getId(), friendId);
+                userRepository.addFriendRelation((int)currentUser.get().getId(), friendId);
             }
             friendsIds = userRepository.findFriends((long) friendId)
                     .stream()
                     .map(User::getId)
+                    .map(Long::intValue)
                     .collect(Collectors.toSet());
-            if (!friendsIds.contains(currentUser.get().getId())) {
-                userRepository.addFriendRelation(friendId, currentUser.get().getId());
+            if (!friendsIds.contains((int)currentUser.get().getId())) {
+                userRepository.addFriendRelation(friendId, (int)currentUser.get().getId());
             }
             return;
         }
         throw new UsernameNotFoundException("User hasn't logged in!");
+    }
+
+    @Override
+    public Collection<UserDto> getUserFriends(long userId) {
+        List<User> friends = userRepository.findFriends(userId);
+        return UserConverter.convertToUserDto(friends)
+                .stream()
+                .peek(dto -> dto.setFriend(Boolean.TRUE))
+                .collect(Collectors.toList());
     }
 
     @Override

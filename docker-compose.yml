@@ -1,0 +1,86 @@
+# Use root/example as user/password credentials
+version: '3.4'
+
+services:
+  consul:
+    image: consul:1.1.0
+    hostname: localhost
+    networks:
+      - lan
+    ports:
+      - 8500:8500
+
+  dialogs_service:
+    image: avpgenium/dialogs-service:latest
+    container_name: "dialogs-service"
+    restart: on-failure
+    environment:
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+    ports:
+      - 9090:9090
+    networks:
+      - lan
+
+  social_backend:
+    image: avpgenium/social-backend:latest
+    container_name: "social-backend"
+    environment:
+      RABBIT_HOST: rabbitmq
+      REDIS_HOST: redis
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+    restart: on-failure
+    ports:
+      - 8888:8888
+      - 9292:9292
+    depends_on:
+      - rabbitmq
+      - mysql
+      - redis
+    networks:
+      - lan
+
+  mysql:
+    image: mysql:5.7
+    container_name: "mysql"
+    env_file:
+      - mysql/mysql_master.env
+    restart: "no"
+    ports:
+      - 4406:3306
+    volumes:
+      - ./mysql/conf/mysql.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+      - ./mysql/data:/var/lib/mysql
+    networks:
+      - lan
+
+  redis:
+    image: redis:6
+    container_name: "redis-server"
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru --appendonly yes
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/data:/data
+    networks:
+      - lan
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: "rabbitmq-server"
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: example
+    ports:
+      - 15672:15672
+      - 5672:5672
+      - 5671:5671
+    volumes:
+      - ./rabbitmq/data:/var/lib/rabbitmq
+    networks:
+      - lan
+
+
+networks:
+  lan:

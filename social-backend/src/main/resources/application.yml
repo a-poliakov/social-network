@@ -1,6 +1,7 @@
 server:
   port: ${PORT:8083}
 
+## MySQL
 replication:
   master:
     url: localhost:4406
@@ -11,8 +12,9 @@ replication:
     username: ${JDBC_DATABASE_USERNAME:root}
     password: ${JDBC_DATABASE_PASSWORD:example}
 
-## MySQL
 spring:
+  application:
+    name: social-backend
   jpa:
     hibernate:
       ddl-auto=update:none
@@ -60,4 +62,15 @@ spring:
 #            namedparam:
 #              NamedParameterJdbcTemplate: trace
 
-
+  # ===============================
+  # SERVICE DISCOVERY
+  # ===============================
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        instance-id: ${spring.application.name}:${random.value}
+        enabled: true
+        health-check-interval: 10s
+#        health-check-path: /consul/health-check
