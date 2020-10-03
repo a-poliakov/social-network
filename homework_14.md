@@ -41,7 +41,25 @@ services:
       - 9090:9090
     networks:
       - lan
-
+  
+  social_backend:
+      image: avpgenium/social-backend:latest
+      container_name: "social-backend"
+      environment:
+        RABBIT_HOST: rabbitmq
+        REDIS_HOST: redis
+        CONSUL_HOST: consul
+        CONSUL_PORT: 8500
+      restart: on-failure
+      ports:
+        - 8888:8888
+        - 9292:9292
+      depends_on:
+        - rabbitmq
+        - mysql
+        - redis
+      networks:
+        - lan
   ...
 
 ```
@@ -143,7 +161,7 @@ spring:
 ```
 
 Скрипты для сборки докер-образов бекенда социальной сети и микросервиса диалогов:
-  - [Dockerfile](../social-chat/Dockerfile) сервиса диалогов (готовый образ [dialogs-service](https://hub.docker.com/repository/docker/avpgenium/dialogs-service) на docker-hub).
-  - [Dockerfile](../Dockerfile) основного бэкэнда (готовый образ [social-backend](https://hub.docker.com/repository/docker/avpgenium/social-backend) на docker-hub).
+  - [Dockerfile](dialogs-service/Dockerfile) сервиса диалогов (готовый образ [dialogs-service](https://hub.docker.com/repository/docker/avpgenium/dialogs-service) на docker-hub).
+  - [Dockerfile](social-backend/Dockerfile) основного бэкэнда (готовый образ [social-backend](https://hub.docker.com/repository/docker/avpgenium/social-backend) на docker-hub).
   
 
